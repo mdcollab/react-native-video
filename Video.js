@@ -157,6 +157,7 @@ export default class Video extends Component {
       resizeMode: nativeResizeMode,
       src: {
         uri,
+        headers: source.headers || {},
         isNetwork,
         isAsset,
         type: source.type || 'mp4',
