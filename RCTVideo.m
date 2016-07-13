@@ -281,12 +281,8 @@ static NSString *const playbackRate = @"rate";
     [NSURL URLWithString:uri] :
     [[NSURL alloc] initFileURLWithPath:[[NSBundle mainBundle] pathForResource:uri ofType:type]];
 
-  if (isAsset) {
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:@{@"AVURLAssetHTTPHeaderFieldsKey": headers}];
-    return [AVPlayerItem playerItemWithAsset:asset];
-  }
-
-  return [AVPlayerItem playerItemWithURL:url];
+  AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:@{@"AVURLAssetHTTPHeaderFieldsKey": headers}];
+  return [AVPlayerItem playerItemWithAsset:asset];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
