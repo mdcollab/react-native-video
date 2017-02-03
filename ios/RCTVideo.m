@@ -296,6 +296,7 @@ static NSString *const playbackRate = @"rate";
   bool isAsset = [RCTConvert BOOL:[source objectForKey:@"isAsset"]];
   NSString *uri = [source objectForKey:@"uri"];
   NSString *type = [source objectForKey:@"type"];
+  NSDictionary *headers = [source objectForKey:@"headers"];
 
   NSURL *url = (isNetwork || isAsset) ?
     [NSURL URLWithString:uri] :
@@ -303,7 +304,7 @@ static NSString *const playbackRate = @"rate";
 
   if (isNetwork) {
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:@{AVURLAssetHTTPCookiesKey : cookies}];
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:@{AVURLAssetHTTPCookiesKey: cookies, AVURLAssetHTTPHeaderFieldsKey: headers}];
     return [AVPlayerItem playerItemWithAsset:asset];
   }
   else if (isAsset) {
