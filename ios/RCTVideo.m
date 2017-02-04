@@ -304,7 +304,7 @@ static NSString *const playbackRate = @"rate";
 
   if (isNetwork) {
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:@{AVURLAssetHTTPCookiesKey: cookies, "AVURLAssetHTTPHeaderFieldsKey": headers}];
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:@{AVURLAssetHTTPCookiesKey: cookies, @"AVURLAssetHTTPHeaderFieldsKey": headers}];
     return [AVPlayerItem playerItemWithAsset:asset];
   }
   else if (isAsset) {
