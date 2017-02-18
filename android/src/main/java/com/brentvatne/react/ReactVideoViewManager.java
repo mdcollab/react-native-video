@@ -3,6 +3,7 @@ package com.brentvatne.react;
 import com.brentvatne.react.ReactVideoView.Events;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.annotations.ReactProp;
@@ -12,6 +13,7 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.yqritc.scalablevideoview.ScalableType;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ReactVideoViewManager extends SimpleViewManager<ReactVideoView> {
@@ -73,6 +75,17 @@ public class ReactVideoViewManager extends SimpleViewManager<ReactVideoView> {
         );
     }
 
+    private Map<String, String> convertHeaders(ReadableMap readableMap) {
+        ReadableMapKeySetIterator iterator = readableMap.keySetIterator();
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        while (iterator.hasNextKey()) {
+            String key = iterator.nextKey();
+            hashMap.put(key, readableMap.getString(key));
+        }
+        return hashMap;
+    }
+
     @ReactProp(name = PROP_SRC)
     public void setSrc(final ReactVideoView videoView, @Nullable ReadableMap src) {
         int mainVer = src.getInt(PROP_SRC_MAINVER);
@@ -82,7 +95,7 @@ public class ReactVideoViewManager extends SimpleViewManager<ReactVideoView> {
         if(mainVer>0) {
             videoView.setSrc(
                     src.getString(PROP_SRC_URI),
-                    src.getMap(PROP_SRC_HEADERS).toHashMap(),
+                    convertHeaders(src.getMap(PROP_SRC_HEADERS)),
                     src.getString(PROP_SRC_TYPE),
                     src.getBoolean(PROP_SRC_IS_NETWORK),
                     src.getBoolean(PROP_SRC_IS_ASSET),
@@ -93,7 +106,7 @@ public class ReactVideoViewManager extends SimpleViewManager<ReactVideoView> {
         else {
             videoView.setSrc(
                     src.getString(PROP_SRC_URI),
-                    src.getMap(PROP_SRC_HEADERS).toHashMap(),
+                    convertHeaders(src.getMap(PROP_SRC_HEADERS)),
                     src.getString(PROP_SRC_TYPE),
                     src.getBoolean(PROP_SRC_IS_NETWORK),
                     src.getBoolean(PROP_SRC_IS_ASSET)
