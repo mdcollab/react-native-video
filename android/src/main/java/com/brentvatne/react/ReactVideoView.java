@@ -83,6 +83,7 @@ public class ReactVideoView extends ScalableVideoView implements MediaPlayer.OnP
 
 
     private String mSrcUriString = null;
+    private Map<String, String> mSrcHeaders = new HashMap<String, String>();
     private String mSrcType = "mp4";
     private boolean mSrcIsNetwork = false;
     private boolean mSrcIsAsset = false;
@@ -198,13 +199,14 @@ public class ReactVideoView extends ScalableVideoView implements MediaPlayer.OnP
         }
     }
 
-    public void setSrc(final String uriString, final String type, final boolean isNetwork, final boolean isAsset) {
-        setSrc(uriString,type,isNetwork,isAsset,0,0);
+    public void setSrc(final String uriString, final Map<String, String> headers, final String type, final boolean isNetwork, final boolean isAsset) {
+        setSrc(uriString,headers,type,isNetwork,isAsset,0,0);
     }
 
-    public void setSrc(final String uriString, final String type, final boolean isNetwork, final boolean isAsset, final int expansionMainVersion, final int expansionPatchVersion) {
+    public void setSrc(final String uriString, final Map<String, String> headers, final String type, final boolean isNetwork, final boolean isAsset, final int expansionMainVersion, final int expansionPatchVersion) {
 
         mSrcUriString = uriString;
+        mSrcHeaders = headers;
         mSrcType = type;
         mSrcIsNetwork = isNetwork;
         mSrcIsAsset = isAsset;
@@ -229,8 +231,6 @@ public class ReactVideoView extends ScalableVideoView implements MediaPlayer.OnP
                 Uri.Builder builtUrl = parsedUrl.buildUpon();
 
                 String cookie = cookieManager.getCookie(builtUrl.build().toString());
-
-                Map<String, String> headers = new HashMap<String, String>();
 
                 if (cookie != null) {
                     headers.put("Cookie", cookie);
@@ -530,10 +530,10 @@ public class ReactVideoView extends ScalableVideoView implements MediaPlayer.OnP
         super.onAttachedToWindow();
 
         if(mMainVer>0) {
-            setSrc(mSrcUriString, mSrcType, mSrcIsNetwork,mSrcIsAsset,mMainVer,mPatchVer);
+            setSrc(mSrcUriString, mSrcHeaders, mSrcType, mSrcIsNetwork,mSrcIsAsset,mMainVer,mPatchVer);
         }
         else {
-            setSrc(mSrcUriString, mSrcType, mSrcIsNetwork,mSrcIsAsset);
+            setSrc(mSrcUriString, mSrcHeaders, mSrcType, mSrcIsNetwork,mSrcIsAsset);
         }
 
     }
