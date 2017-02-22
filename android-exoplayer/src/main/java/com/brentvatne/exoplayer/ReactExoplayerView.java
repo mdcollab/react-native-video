@@ -47,6 +47,7 @@ import com.google.android.exoplayer2.util.Util;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.util.Map;
 
 @SuppressLint("ViewConstructor")
 class ReactExoplayerView extends FrameLayout implements
@@ -88,6 +89,7 @@ class ReactExoplayerView extends FrameLayout implements
     // Props from React
     private Uri srcUri;
     private String extension;
+    private Map<String, String> headers;
     private boolean repeat;
     private boolean disableFocus;
     // \ End props
@@ -332,7 +334,7 @@ class ReactExoplayerView extends FrameLayout implements
      * @return A new DataSource factory.
      */
     private DataSource.Factory buildDataSourceFactory(boolean useBandwidthMeter) {
-        return DataSourceUtil.getDefaultDataSourceFactory(getContext(), useBandwidthMeter ? BANDWIDTH_METER : null);
+        return DataSourceUtil.getDefaultDataSourceFactory(getContext(), useBandwidthMeter ? BANDWIDTH_METER : null, headers);
     }
 
     // AudioManager.OnAudioFocusChangeListener implementation
@@ -482,11 +484,12 @@ class ReactExoplayerView extends FrameLayout implements
 
     // ReactExoplayerViewManager public api
 
-    public void setSrc(final Uri uri, final String extension) {
+    public void setSrc(final Uri uri, final String extension, final Map<String, String> headers) {
         if (uri != null) {
             this.srcUri = uri;
             this.extension = extension;
-            this.mediaDataSourceFactory = DataSourceUtil.getDefaultDataSourceFactory(getContext(), BANDWIDTH_METER);
+            this.headers = headers;
+            this.mediaDataSourceFactory = DataSourceUtil.getDefaultDataSourceFactory(getContext(), BANDWIDTH_METER, headers);
         }
     }
 
