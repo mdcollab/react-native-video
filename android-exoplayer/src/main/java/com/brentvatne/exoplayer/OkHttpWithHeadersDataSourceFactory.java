@@ -12,7 +12,7 @@ import okhttp3.Call;
 
 
 public final class OkHttpWithHeadersDataSourceFactory implements Factory {
-    private final Factory factory;
+    private final OkHttpDataSourceFactory factory;
     private final Map<String, String> headers;
 
     public OkHttpWithHeadersDataSourceFactory(
@@ -26,7 +26,7 @@ public final class OkHttpWithHeadersDataSourceFactory implements Factory {
 
     @Override
     public DataSource createDataSource() {
-        DataSource dataSource = this.factory.createDataSource();
+        OkHttpDataSource dataSource = factory.createDataSource();
         if (headers != null) {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
                 dataSource.setRequestProperty(entry.getKey(), entry.getValue());

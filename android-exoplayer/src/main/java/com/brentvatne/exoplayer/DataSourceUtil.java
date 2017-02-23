@@ -64,7 +64,7 @@ public class DataSourceUtil {
                 buildHttpDataSourceFactory(appContext, bandwidthMeter, headers));
     }
 
-    private static HttpDataSource.Factory buildHttpDataSourceFactory(Context context, DefaultBandwidthMeter bandwidthMeter, Map<String, String> headers) {
+    private static DataSource.Factory buildHttpDataSourceFactory(Context context, DefaultBandwidthMeter bandwidthMeter, Map<String, String> headers) {
         return new OkHttpWithHeadersDataSourceFactory(OkHttpClientProvider.getOkHttpClient(), getUserAgent(context), bandwidthMeter, headers);
     }
 
