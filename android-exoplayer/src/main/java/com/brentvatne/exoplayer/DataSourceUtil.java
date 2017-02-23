@@ -44,9 +44,7 @@ public class DataSourceUtil {
     }
 
     public static DataSource.Factory getDefaultDataSourceFactory(Context context, DefaultBandwidthMeter bandwidthMeter, Map<String, String> headers) {
-        if (defaultDataSourceFactory == null) {
-            defaultDataSourceFactory = buildDataSourceFactory(context, bandwidthMeter, headers);
-        }
+        defaultDataSourceFactory = buildDataSourceFactory(context, bandwidthMeter, headers);
         return defaultDataSourceFactory;
     }
 
