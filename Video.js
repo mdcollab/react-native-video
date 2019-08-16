@@ -275,7 +275,7 @@ export default class Video extends Component {
         isNetwork,
         isAsset,
         shouldCache,
-        headers: source.headers || {}
+        headers: source.headers || {},
         type: source.type || '',
         mainVer: source.mainVer || 0,
         patchVer: source.patchVer || 0,
